@@ -1,0 +1,28 @@
+<div id="main-container" style="border: 2px red solid; width: 80%;" >
+    <p>
+        <%/*%><!-- first we populate user and than we render this file so we wrote like this post.user.id--><%*/%>
+        <%if(locals.user.id==post.user.id){%>
+        <small>
+            <%/*%><!-- it is same as post._id --><%*/%>
+            <a href="/posts/destroy/<%=post.id%>"><button>Delete post</button></a>   
+        </small>
+        <%}%>
+   <li><%=post.content%></li> 
+   <br>
+   <small><%=post.user.name%></small>
+</p>
+<div class="post-comments">
+        <form action="/comments/create" method="POST" >
+            <input type="text" name="content" placeholder="Type a comment..." required>
+            <input type="hidden" name="post" value=<%=post._id%>>
+            <input type="submit"  value="Add Comment" >  
+        </form>git 
+    </div>
+    <div class="post-comments-list">
+        <ul id="post-comments-<%=post._id%>">
+            <%for(let comment of post.comments){%>
+                <%- include('comment') -%>     
+                <%}%>
+            </ul>
+        </div>
+        </div>

@@ -1,0 +1,14 @@
+<div>
+    <p style="color: red;">
+        <% if (locals.user.id == comment.user.id) { %>
+            <small>
+                <%/*%><!-- it is the same as comment._id --><%*/%>
+                <a href="/comments/destroy/<%= comment.id %>"><button>Delete comment</button></a>   
+            </small>
+        <% } %>
+        comment: <%= comment.content %>
+    </p>        
+    <br>
+    <small style="color: red;">comment_name: <%= comment.user.name %></small>              
+    <small style="color: red;">comment_email: <%= comment.user.email %></small> 
+</div>

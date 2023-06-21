@@ -1,0 +1,14 @@
+<html>
+    <head>
+     <title><%=title%></title>
+     <link rel="stylesheet" href="../css/layout.css">
+     <%-style%> 
+    </head>
+    <body> 
+   <%-include('_header');%>                      <!--this is called partials-->        
+      <%- body %>                <!--body is predefine in ejs library-->  <!--variable part-->       
+  <%-include('_footer');%>
+  <%-script%>
+    </body>
+</html>
+<!--layout file automatically invoke  for every views or ejs files/pages-->

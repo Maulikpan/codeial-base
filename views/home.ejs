@@ -1,0 +1,17 @@
+<h1>Codeial / <%=title%></h1>     <!--this is called variable part -->  
+<section id="feed-posts">
+    <%if(locals.a){%>
+    <h4>Posts</h4>
+    <form action="/posts/create" id="new-post-form" method="POST">
+        <textarea name="content" id="" cols="30" rows="3" placeholder="Type here..." required></textarea>
+        <input type="submit" name="" id="" value="Post">
+    </form>
+    <div id="posts-list-container">
+        <ul>
+            <% for (let post of posts) { %>
+                <%- include('_post', { post: post }) -%>
+            <% } %>
+        </ul>        
+    </div>
+    <%}%>
+</section>
