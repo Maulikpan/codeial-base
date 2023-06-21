@@ -20,8 +20,8 @@
     </div>
     <div class="post-comments-list">
         <ul id="post-comments-<%=post._id%>">
-            <%for(let comment of post.comments){%>
-                <%- include('comment') -%>     
+            <%for(comment of post.comments){%>
+                <%-include('_comment')-%>     
                 <%}%>
             </ul>
         </div>

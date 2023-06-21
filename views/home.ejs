@@ -7,11 +7,9 @@
         <input type="submit" name="" id="" value="Post">
     </form>
     <div id="posts-list-container">
-        <ul>
-            <% for (let post of posts) { %>
-                <%- include('_post', { post: post }) -%>
-            <% } %>
-        </ul>        
+            <% for (post of posts) { %>
+                <%- include('_post') -%> 
+            <% } %>        
     </div>
     <%}%>
 </section>
