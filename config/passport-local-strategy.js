@@ -101,6 +101,7 @@ passport.setAuthenticatedUser=function(req,res,next){
     //are just sending this to the locals for the views
     console.log('user caught',req.user);
     res.locals.user=req.user;
+    res.locals.usersProfileUrl=req.url; //new feature don't mind
   }
   next(); 
 }

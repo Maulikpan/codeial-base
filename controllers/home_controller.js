@@ -1,7 +1,8 @@
-const Post=require('../models/post')
+const Post=require('../models/post');
+const User=require('../models/user');
 const passport=require('../config/passport-local-strategy');
 module.exports.home=function(req,res){
-   console.log(req.cookies);
+   console.log(req.cookies);  
 // res.cookie('user_id',222);
 //    Post.find({user:req.user._id})
 //    .then((posts)=>{
@@ -17,7 +18,13 @@ module.exports.home=function(req,res){
   }}).exec()
   // Post.find({}).populate('user').populate('comments') for populate multiple fields  
    .then((posts) => { 
-     return res.render('../views/home.ejs', { title: "Codeial|Home", a: req.isAuthenticated() ? true : false, posts: posts });
+    User.find({})
+    .then((users)=>{
+      return res.render('../views/home.ejs', { title: "Codeial|Home", a: req.isAuthenticated() ? true : false, posts: posts,all_user:users });
+    })
+    .catch(()=>{
+
+    })
    })
    .catch((err) => {
      console.error(err);
