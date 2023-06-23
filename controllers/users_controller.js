@@ -2,12 +2,32 @@ const User = require('../models/user');
 const passport=require('../config/passport-local-strategy');
 // actions  or controller functions to respond http request 
 module.exports.profile = function(req, res) {
-    {                                   
-       return res.render('user_profile',{title:'User profile',user:res.locals.user})           
+    {                
+            return res.render('user_profile',{title:'User profile',user:res.locals.user})                        
     }  
 }
-module.exports.profile2 = function (req, res) {
-    return res.end("<h1>user profile 2</h1>");
+module.exports.update=function(req,res){
+    if(req.user.id==req.params.id)   //for security purpose
+    { 
+     User.findByIdAndUpdate(req.params.id,req.body)
+     .then((user)=>{
+             console.log('user succesfully updated',user); 
+             return res.redirect('/');
+       })
+     .catch((error)=>{   
+     console.log('err',error)
+     return res.status(401).send('Unauthorized');
+     }) 
+    }
+}
+module.exports.others_profile = function (req, res) {
+    User.findById(req.params.id)
+       .then((user)=>{
+           return res.render('other_user_profile',{title:'User profile',profile_user:user,user:res.locals.user})           
+       }) 
+       .catch((error)=>{
+       console.log('error',error);
+    })    
 }
 // render signup page
 module.exports.signUp = function (req, res) {
