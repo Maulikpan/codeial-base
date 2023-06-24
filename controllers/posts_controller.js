@@ -26,11 +26,13 @@ module.exports.create=async function(req,res)
       content: req.body.content,
       user: res.locals.user._id    //or req.user._id or .id
     })
+      req.flash('success','Post has been published successfuly')
         return res.redirect('back')
   }
   catch(err)
   {
-     console.log(err);
+    req.flash('error',err);    
+    return res.redirect('back');
   }
     
 }
@@ -46,14 +48,18 @@ module.exports.destroy=function(req,res)
       Comment.deleteMany({post:req.params.id})
       .then((comments)=>{ 
     console.log(comments);
+    req.flash('success','Post and associated comment has been deleted  successfuly')
     return res.redirect('back')
       })
       .catch((error)=>{
+        req.flash('error',error);
    console.log('err',error);
       })     
     }
    })
    .catch((error)=>{
+    req.flash('error','you can not delete this post');
     console.log('error',error)
+    return res.redirect('back');
    })
 }

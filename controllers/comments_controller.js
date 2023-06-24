@@ -30,13 +30,17 @@ module.exports.destory=function(req,res){
     comment.deleteOne();
     Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}})
     .then(()=>{
+      req.flash('success','comment deleted')
            return res.redirect('back');
       })
       .catch((error)=>{
-      console.log(error);
+        req.flash('error',error);
+        console.log(error);
       })  
   }})
   .catch((error)=>{
+   req.flash('error',error);
    console.log('error',error)
+   return res.redirect('back');
   })
 }
