@@ -87,7 +87,6 @@ module.exports.create = function (req, res) {
 //         .then((user /*document*/) => {
 //             //handle user found
 //             if (user) {
- ""
 //                 //handle password which don't match
 //                 if (user.password !== req.body.password) {
 //                     return res.redirect('back');
@@ -138,17 +137,17 @@ module.exports.createSession = function (req, res)
   return res.redirect('/');
 }
 module.exports.destroySession=function(req,res){
+    console.log(res.locals.flash);
     req.logout(function(err) {     
         //logout function  remove the cookie from browser to remove the user identity
         if (err) {
           // Handle error
           console.error(err);
-          req.flash('success',' You have logged out'); 
-          return next(err);
+          return;
         }
         // User has been logged out successfully
-        // Perform any additional actions or redirect as needed
-        res.redirect('/'); // Redirect to the home page, for example
+        req.flash('success',' You have signed Out'); 
+        res.redirect('/'); 
       });
 }
 module.exports.logOut = async function (req, res) {
