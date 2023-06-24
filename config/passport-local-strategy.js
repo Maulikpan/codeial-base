@@ -22,7 +22,7 @@ passport.use(new LocalStrategy({
               req.flash('error',err)
                return done(err); 
               }
-   )
+   ) 
   })) 
 
 
