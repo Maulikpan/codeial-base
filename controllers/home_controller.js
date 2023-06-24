@@ -37,6 +37,13 @@ module.exports.home=function(req,res){
 //we can  write like  this as asynchronize using async await
 module.exports.home1=async function(req,res)
 {
+  try{
   let posts=await Post.find({});
   return res.render('home1',{title:'Codieal | Home',post:posts}); 
+  }
+  catch(error)
+  {
+    console.log(error);
+    return;
+  }
 }

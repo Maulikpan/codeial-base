@@ -1,22 +1,38 @@
 const Post=require('../models/post');
 const Comment=require('../models/comment');
-module.exports.create=function(req,res)
-{
-   console.log('this is new',req.user);
-    Post.create({
-        content: req.body.content,
-        user: res.locals.user._id    //or req.user._id or .id
-      })
-        .then((post) => {
-          // Handle success or perform additional operations
-          console.log('Post created:', post);
-          return res.redirect('back')
-        })
-        .catch((error) => {
-          // Handle error
-          console.error('Error creating post:', error);
-        });
+// module.exports.create=function(req,res)
+// {
+//    console.log('this is new',req.user);
+//     Post.create({
+//         content: req.body.content,
+//         user: res.locals.user._id    //or req.user._id or .id
+//       })
+//         .then((post) => {
+//           // Handle success or perform additional operations
+//           console.log('Post created:', post);
+//           return res.redirect('back')
+//         })
+//         .catch((error) => {
+//           // Handle error
+//           console.error('Error creating post:', error);
+//         });
      
+// }
+module.exports.create=async function(req,res)
+{
+  try
+  {
+    await Post.create({
+      content: req.body.content,
+      user: res.locals.user._id    //or req.user._id or .id
+    })
+        return res.redirect('back')
+  }
+  catch(err)
+  {
+     console.log(err);
+  }
+    
 }
 module.exports.destroy=function(req,res)
 {
