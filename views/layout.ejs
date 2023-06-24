@@ -1,19 +1,41 @@
 <html>
     <head>
      <title><%=title%></title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
      <link rel="stylesheet" href="/css/layout.css">
      <%-style%> 
     </head>
     <body> 
    <%-include('_header');%><!--this is called partials-->        
-   <%if(locals.flash.success && locals.flash.success.length>0){%>
+   <!-- <%if(locals.flash.success && locals.flash.success.length>0){%>
     <h5>
         <%=locals.flash.success%>
     </h5>
-    <%}%>
+    <%}%> -->
       <%- body %>                <!--body is predefine in ejs library-->  <!--variable part-->       
   <%-include('_footer');%>
   <%-script%>
+  <script>
+     <%if(locals.flash.success && locals.flash.success.length>0){%>
+        new Noty({
+        theme:'relax',
+    text: "<%=locals.flash.success%>",
+   type:'success',
+   layout:'topRight',
+   timeout:1500
+}).show();
+    <%}%>
+    <%if(locals.flash.error && locals.flash.error.length>0){%>
+        new Noty({
+        theme:'relax',
+    text: "<%=locals.flash.error%>",
+   type:'error',
+   layout:'topRight',
+   timeout:1500
+}).show();
+    <%}%>
+  </script>
     </body>
 </html>
 <!--layout file automatically invoke  for every views or ejs files/pages-->
