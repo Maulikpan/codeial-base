@@ -29,8 +29,14 @@ module.exports.home=function(req,res){
    .catch((err) => {
      console.error(err);
    });
+   //also we can write like this
+  // let post=Post.find({}).populate('user').populate({path:'comments',populate:{ path:'user'}}).exec()
+  // post.then(()=>{})
 }
-module.exports.home1=function(req,res)
+
+//we can  write like  this as asynchronize using async await
+module.exports.home1=async function(req,res)
 {
-    return res.end("Maulik panchal");
+  let posts=await Post.find({});
+  return res.render('home1',{title:'Codieal | Home',post:posts}); 
 }
