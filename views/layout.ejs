@@ -5,7 +5,13 @@
      <%-style%> 
     </head>
     <body> 
+
    <%-include('_header');%>                      <!--this is called partials-->        
+   <%if(flash.success && flash.success.length>0){%>
+    <h5>
+        <%=flash.success%>
+    </h5>
+    <%}%>
       <%- body %>                <!--body is predefine in ejs library-->  <!--variable part-->       
   <%-include('_footer');%>
   <%-script%>

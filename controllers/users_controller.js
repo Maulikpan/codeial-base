@@ -129,10 +129,12 @@ module.exports.create = function (req, res) {
 
 // }
 
+
 //passport authentication session id
 
 module.exports.createSession = function (req, res)
 { 
+  req.flash('success','Logged in successfuly');  
   return res.redirect('/');
 }
 module.exports.destroySession=function(req,res){
@@ -141,6 +143,7 @@ module.exports.destroySession=function(req,res){
         if (err) {
           // Handle error
           console.error(err);
+          req.flash('success',' You have logged out'); 
           return next(err);
         }
         // User has been logged out successfully
