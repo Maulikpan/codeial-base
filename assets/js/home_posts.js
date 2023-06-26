@@ -8,7 +8,7 @@
           $.ajax({
             type:'post',
             url:'/posts/create',
-            data:newPostForm.serialize(),  //convert into json //function of jquery library
+            data:newPostForm.serialize(),  //convert into json //function of jquery library //this data is pass to the req.body 
             success:function(data){
              console.log(data);
             },
