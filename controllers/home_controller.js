@@ -20,7 +20,7 @@ module.exports.home=function(req,res){
    .then((posts) => { 
     User.find({})
     .then((users)=>{
-      return res.render('../views/home.ejs', { title: "Codeial|Home", a: req.isAuthenticated() ? true : false, posts: posts,all_users:users });
+      return res.render('../views/home.ejs', { title: "Codeial | Home", a: req.isAuthenticated() ? true : false, posts: posts,all_users:users });
     })
     .catch(()=>{
 
