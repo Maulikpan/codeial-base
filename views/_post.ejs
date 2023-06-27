@@ -1,10 +1,10 @@
-<div id="main-container" style="border: 2px red solid; width: 100%;" >
+<div id="main-container  post-<%=post._id%>" style="border: 2px red solid; width: 100%  ;">
     <p>
         <%/*%><!-- first we populate user and than we render this file so we wrote like this post.user.id--><%*/%>
         <%if(locals.user.id==post.user.id){%>
         <small>
             <%/*%><!-- it is same as post._id --><%*/%>
-            <a href="/posts/destroy/<%=post.id%>"><button>Delete post</button></a>   
+            <a  class="delete-post-button" href="/posts/destroy/<%=post.id%>"><button>Delete post</button></a>   
         </small>
         <%}%>
    <li><%=post.content%></li> 
