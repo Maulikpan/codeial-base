@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const Post=require("../models/post");
+const Comment=require("../models/comment");
 const passport = require('../config/passport-local-strategy');
 const bcrypt = require('bcrypt');
 // actions  or controller functions to respond http request 
@@ -32,10 +34,7 @@ module.exports.others_profile = function (req, res) {
 }
 // render signup page
 module.exports.signUp = function (req, res) {
-    console.log(req.cookies);
-    if (req.isAuthenticated()) { //req.isAuthenticated check the presence of cookie present or not
-        return res.redirect('/users/profile')
-    }
+    console.log(req.cookies);   
     return res.render('user_sign_up', {
         title: 'Codeial | sign Up'
     })
@@ -209,6 +208,13 @@ module.exports.create = function (req, res) {
     module.exports.logOut = async function (req, res) {
         try {
             console.log(res.locals.user);
+            // await Post.findByIdAndDelete(res.locals.user.id);
+            let comment=await Comment.find({user:res.locals.user.id});
+            for(let com of comment){
+            Post.findByIdAndUpdate(com.post,{$pull:{comments:com.id}});
+            }
+            await Post.deleteMany({user:res.locals.user.id});
+            await Comment.deleteMany({user:res.locals.user.id});
             await User.findByIdAndDelete(res.locals.user.id);
             console.log('user successfully deleted');
             res.redirect('/users/sign-up');

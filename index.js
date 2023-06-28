@@ -31,7 +31,7 @@ app.use(session({
   name:'codeial',
   secret:'blashsomething',
   saveUninitialized:false,
-  resave:false,
+  resave:false,       
   cookie:{
     maxAge:(1000*600*100)
   },
@@ -45,8 +45,7 @@ app.use(session({
    
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(passport.setAuthenticatedUser)
-
+app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customeMware.setFlash);
 //use express router
