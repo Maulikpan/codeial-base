@@ -19,12 +19,11 @@
   <%-script%>
   <script>
      <%if(locals.flash.success && locals.flash.success.length>0){%>
-        
         new Noty({
         theme:'relax',
     text: "<%=locals.flash.success%>",
    type:'success',
-   layout:'topRight',
+   layout:'topRight', 
    timeout:1500
 }).show();
 
