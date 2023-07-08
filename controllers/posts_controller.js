@@ -46,30 +46,61 @@ module.exports.create=async function(req,res)
   }
     
 }
-module.exports.destroy=function(req,res)
-{
-  //params is whole object of url vriable part
+// module.exports.destroy=function(req,res)
+// {
+//   //params is whole object of url vriable part
+//   console.log(req.params);
+//    Post.findById(req.params.id)
+//    .then((post)=>{
+//     //.id means converting the object id into string
+//      if(post.user==req.user.id){
+//       post.deleteOne();
+//       Comment.deleteMany({post:req.params.id})
+//       .then((comments)=>{ 
+        
+//     console.log(comments);
+//     req.flash('success','Post and associated comment has been deleted  successfuly')
+//     // return res.redirect('back')  not needed in XMLHttprequest //because here no any reload of site
+//       })
+//       .catch((error)=>{
+//         req.flash('error',error);
+//    console.log('err',error);
+//       })     
+//     }
+//    })
+//    .catch((error)=>{
+//     req.flash('error','you can not delete this post');
+//     console.log('error',error)
+//     return res.redirect('back');
+//    })
+// }
+module.exports.destroy = function(req, res) {
+  // params is the whole object of URL variable part
   console.log(req.params);
-   Post.findById(req.params.id)
-   .then((post)=>{
-    //.id means converting the object id into string
-     if(post.user==req.user.id){
-      post.deleteOne();
-      Comment.deleteMany({post:req.params.id})
-      .then((comments)=>{ 
-    console.log(comments);
-    req.flash('success','Post and associated comment has been deleted  successfuly')
-    return res.redirect('back')
-      })
-      .catch((error)=>{
-        req.flash('error',error);
-   console.log('err',error);
-      })     
-    }
-   })
-   .catch((error)=>{
-    req.flash('error','you can not delete this post');
-    console.log('error',error)
-    return res.redirect('back');
-   })
-}
+  Post.findById(req.params.id)
+    .then((post) => {
+      // .id means converting the object id into a string
+      if (post.user == req.user.id) {
+        if (req.xhr) {
+          post.deleteOne();
+          Comment.deleteMany({ post: req.params.id })
+            .then((comments) => {
+              console.log(comments);
+            })
+            .catch((error) => {
+              console.log('err', error);
+            });
+        }
+      }
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+  return res.status(200).json({
+    
+    data: {
+      post_id: req.params.id
+    },
+    message: 'Post deleted'
+  });
+};

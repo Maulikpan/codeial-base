@@ -13,6 +13,7 @@
              console.log(data);
              let newPost=newPostDom(data.data.post);
              $('#posts-list-container').prepend(newPost);  // prepend is  jquery function to append at first position
+             deletePost($('.delete-post-button'));
             },
             error:function(error){
                 console.log(error.responseText);
@@ -46,4 +47,23 @@
               </ul>
           </div>
           </div>`)
+    }
+    //method to delete a post from DOM
+    let deletePost=function(deleteLink)
+    {
+        $(deleteLink).click(function(e) {
+            e.preventDefault();
+            $.ajax({
+              type: 'get',
+              url: $(deleteLink).prop('href'),
+              success: function(data) {
+                console.log(data);
+                console.log('successfully deleted!');
+                $(`#post-${data.data.post_id}`).remove();
+              },
+              error: function(error) {
+                console.log(error.responseText);
+              }
+            });
+          });   
     }
