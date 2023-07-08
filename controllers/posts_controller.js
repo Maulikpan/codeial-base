@@ -74,33 +74,36 @@ module.exports.create=async function(req,res)
 //     return res.redirect('back');
 //    })
 // }
-module.exports.destroy = function(req, res) {
-  // params is the whole object of URL variable part
-  console.log(req.params);
-  Post.findById(req.params.id)
-    .then((post) => {
-      // .id means converting the object id into a string
-      if (post.user == req.user.id) {
-        if (req.xhr) {
-          post.deleteOne();
-          Comment.deleteMany({ post: req.params.id })
-            .then((comments) => {
-              console.log(comments);
-            })
-            .catch((error) => {
-              console.log('err', error);
-            });
-        }
+module.exports.destroy = async function(req, res){
+  try{
+      let post = await Post.findById(req.params.id);
+
+      if (post.user == req.user.id){
+          post.remove();
+
+          await Comment.deleteMany({post: req.params.id});
+
+
+          if (req.xhr){
+              return res.status(200).json({
+                  data: {
+                      post_id: req.params.id
+                  },
+                  message: "Post deleted"
+              });
+          }
+
+          req.flash('success', 'Post and associated comments deleted!');
+
+          return res.redirect('back');
+      }else{
+          req.flash('error', 'You cannot delete this post!');
+          return res.redirect('back');
       }
-    })
-    .catch((error) => {
-      console.log('error', error);
-    });
-  return res.status(200).json({
-    
-    data: {
-      post_id: req.params.id
-    },
-    message: 'Post deleted'
-  });
-};
+
+  }catch(err){
+      req.flash('error', err);
+      return res.redirect('back');
+  }
+  
+}
