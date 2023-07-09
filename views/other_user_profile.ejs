@@ -2,15 +2,39 @@
 <h1 id="head">Codeial / profile page</h1>
 <%if(user.id==profile_user.id){%>
     <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
-        Update profile:
-        <input type="text" name="name"  placeholder="Your name" value="<%=profile_user.name%>" required>
-        <input type="email" name="email"  placeholder="Your email" value="<%=profile_user.email%>" required>
-        <input type="file" name="avatar" id="" placeholder="Profile Picture">
+        <h5>Update Profile:</h5>
+        <input type="text" name="name" placeholder="Your name" value="<%=profile_user.name%>" required>
+        <input type="email" name="email" placeholder="Your email" value="<%=profile_user.email%>" required>
+        <div id="Profile_photo_container">
+            <!-- <input type="file" name="avatar" id="Profile_photo" placeholder="Profile Picture"> -->
+            <label class="label">
+                <input type="file" name="avatar" id="Profile_photo">
+                <span>Select profile photo</span>
+            </label>
+        </div>
         <input type="submit" name="" value="update">
     </form>
     <!-- if user matches than show the form -->
     <%}else{%>
         <!-- else show only the profile info -->
-        <p>Name:<%=profile_user.name%></p>
-         <p>Email:<%=profile_user.email%></p> 
+        <p>Name:<%=profile_user.name%>
+        </p>
+        <p>Email:<%=profile_user.email%>
+        </p>
         <%}%>
+            <script>
+                const Image_input = document.getElementById('Profile_photo');
+                const Profile_photo_container = document.getElementById('Profile_photo_container');
+                const created_img_ele = document.createElement('img');
+                Image_input.addEventListener('change', function (event) {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(event.target.files[0]);
+                    reader.onload = function (e) {
+                        created_img_ele.src = e.target.result;
+                        Profile_photo_container.appendChild(created_img_ele);
+                    };
+                });
+                created_img_ele.addEventListener('click', function () {
+                    created_img_ele.classList.toggle('zoomed');
+                });
+            </script>
