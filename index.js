@@ -10,6 +10,7 @@ const cookieParser=require('cookie-parser'); //importtant for flash msg
 const session=require('express-session'); //important for flash msg
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy'); 
+const passportJWT=require('./config/passport-jwt-strategy'); 
 const MongoStore=require('connect-mongo');
 const flash=require('connect-flash');
 const customeMware=require('./config/middleware');
