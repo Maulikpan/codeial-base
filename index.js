@@ -16,6 +16,8 @@ const customeMware=require('./config/middleware');
 
 app.use(express.urlencoded());
 app.use(cookieParser());
+//make the uploads path available for the browser 
+app.use('/uploads',express.static(__dirname+'/uploads'))  //static folder must be used in middleware
 app.use(express.static('./assets'));   
 app.use(expresslayouts);
 //extract style and script from sub pages into the layout
@@ -33,7 +35,7 @@ app.use(session({
   saveUninitialized:false,
   resave:false,       
   cookie:{
-    maxAge:(100*600*10)
+    maxAge:(100*6000*1000)
   },
   store: MongoStore.create(
     {
@@ -48,6 +50,7 @@ app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customeMware.setFlash);
+
 //use express router
 app.use('/', require('./routes'));  
 
