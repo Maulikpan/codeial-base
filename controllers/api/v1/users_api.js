@@ -15,9 +15,12 @@ module.exports.createSession =async function (req, res)
     return res.json(200,{
         message:"Sign in succesfully ,here is your token please keep it safe",
         data:{
-            token:jwt.sign(user.toJSON(),'codeial',{expiresIn:'10000'})
+            token:jwt.sign(user.toJSON(),'codeial',{expiresIn:'100000'})
             //this create a json web token using this three parameter
             //header + payload +signature
+            // header section contain the info of user that is extracted by jwt 
+            //we need to add this cookie/jwt token  mannually to the browser 
+            //and browser will send it with all request that is made by user 
         }
     })
     }
