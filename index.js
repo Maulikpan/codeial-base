@@ -11,10 +11,10 @@ const session=require('express-session'); //important for flash msg
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy'); 
 const passportJWT=require('./config/passport-jwt-strategy'); 
+const passportGoogle=require('./config/passport-google-oauth-20-strategy');
 const MongoStore=require('connect-mongo');
 const flash=require('connect-flash');
 const customeMware=require('./config/middleware');
-
 app.use(express.urlencoded());
 app.use(cookieParser());
 //make the uploads path available for the browser 
@@ -60,4 +60,4 @@ app.listen(port, function (err) {
     console.log(`Error in running the server: ${err}`);
   }
   console.log('Server is running on port', port);
-});
+}); 

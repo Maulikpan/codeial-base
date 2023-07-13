@@ -19,4 +19,7 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/sign-out',usersControllers.destroySession);
 router.get('/log-out',usersControllers.logOut); 
+router.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}));
+//scope is informations that we fetch from google
+router.get('/auth/google/callback',passport.authenticate('google', {failureRedirect:'/users/sign-in'}),usersControllers.createSession); //this is call back function from google
 module.exports=router;      

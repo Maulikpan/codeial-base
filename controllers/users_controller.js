@@ -79,7 +79,7 @@ module.exports.others_profile = function (req, res) {
 }
 // render signup page
 module.exports.signUp = function (req, res) {
-    console.log(req.cookies);
+    //console.log(req.cookies);
     return res.render('user_sign_up', {
         title: 'Codeial | sign Up'
     })

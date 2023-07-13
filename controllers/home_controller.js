@@ -2,7 +2,7 @@ const Post=require('../models/post');
 const User=require('../models/user');
 const passport=require('../config/passport-local-strategy');
 module.exports.home=function(req,res){
-   console.log(req.cookies);  
+   console.log(req.cookies); 
 // res.cookie('user_id',222);
 //    Post.find({user:req.user._id})
 //    .then((posts)=>{
