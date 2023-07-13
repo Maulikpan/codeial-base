@@ -11,7 +11,7 @@ passport.use(new googleStrategy({
 },
 function(accessToken, refreshToken, profile,done) {
     //find a user 
-    console.log(profile);
+    console.log(profile); //profile is contain fetched all information of user from google
     User.findOne({email:profile.emails[0].value}).exec()
     .then((user)=>{
         if(user)
@@ -23,7 +23,7 @@ function(accessToken, refreshToken, profile,done) {
         {
             //if not found ,create the user and set it as req.user
               User.create({
-                name:profile.displayName,
+                name:profile.displayName, 
                 email:profile.emails[0].value,
                 password:crypto.randomBytes(20).toString('hex') //Generate random password 
               })
