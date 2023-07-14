@@ -232,7 +232,7 @@ module.exports.create = function (req, res) {
 
 //passport authentication session id
 
-module.exports.createSession = function (req, res) {
+module.exports. createSession = function (req, res) {
     req.flash('success', 'Logged in successfuly');
     return res.redirect('/');
 }
