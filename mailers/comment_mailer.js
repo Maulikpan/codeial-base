@@ -5,10 +5,11 @@ const nodeMailer=require('../config/nodemailer');
 exports.newComment=(comment)=>{
     console.log('inside newComment mailer',comment);
     nodeMailer.transpoter.sendMail({
-        from:'easywayforweb@gamil.com',
+        from:'maulikpanchal1811@gmail.com',
         to:comment.user.email,
         subject:'New comment Published!',
-        html:'<h1>Yup,your comment is now published</h1>'
+        html:`<h1>Yup,your comment is now published</h1>
+              <small style="color:red;">${comment.content}</small>`
     },(err,info)=>{
      if(err)
      {

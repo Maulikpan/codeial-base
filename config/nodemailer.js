@@ -9,7 +9,7 @@ let transpoter = nodeMailer.createTransport({      //we use smtp config to send 
     secure:true,
     auth: {
         user:'easywayforweb@gmail.com',
-        pass:'MAULIK@1811@WEB'
+        pass:'ofypwwiqyrvtwjhh'
     }
 });
 
