@@ -5,7 +5,7 @@ const { realpath } = require('fs');
 let transpoter = nodeMailer.createTransport({      //we use smtp config to send mail to remote user via smtp
     service:'gmail',
     host:'smtp.gmail.com',
-    port:465,
+    port:587,
     secure:true,
     auth: {
         user:'easywayforweb@gmail.com',
