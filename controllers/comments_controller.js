@@ -1,6 +1,8 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 const commentsMailer = require('../mailers/comment_mailer');
+const commentEmailWorker=require('../workers/comment_email_worker');
+const queue=require('../config/kue');
 const { compare } = require('bcrypt');
 module.exports.create = function (req, res) {
   Post.findById(req.body.post)  //check that post is available or not
@@ -19,7 +21,16 @@ module.exports.create = function (req, res) {
             .populate('user', 'name email')
             .exec()
             .then((populatedComment) => {
-              commentsMailer.newComment(populatedComment);
+              // commentsMailer.newComment(populatedComment);
+              //whenever new comment generated it send to the queue and worker of kue send email 
+              let job = queue.create('emails', populatedComment).save(function(err) {
+                if (err) {
+                  console.log('Error in creating a queue and sending comment to queue', err);
+                }
+                console.log('job',job);
+                console.log('Job enqueued:', job.id);
+              });
+              
             })
 
         .catch((err) => {

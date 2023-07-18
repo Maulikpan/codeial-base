@@ -2,10 +2,11 @@ const nodeMailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
 const { realpath } = require('fs');
-let transpoter = nodeMailer.createTransport({      //we use smtp config to send mail to remote user via smtp
+let transpoter = nodeMailer.createTransport
+({ //we use smtp config to send mail to remote user via smtp
     service:'gmail',
     host:'smtp.gmail.com',
-    port:587,
+    port:587, //TLS
     secure:true,
     auth: {
         user:'easywayforweb@gmail.com',
@@ -16,17 +17,16 @@ let transpoter = nodeMailer.createTransport({      //we use smtp config to send 
 let renderTemplete = function (data, relativePath) {
     let mailHtml;
     ejs.renderFile(
-        path.join(__dirname, '../views/mailer', relativePath),
-        data,
+        path.join(__dirname,'../views/mailers',relativePath),data,
         function (err, templete) {
             if (err) {
-                console.log('error in rendering templete');
+                console.log('error in rendering templete',err);
                 return;
             }
             mailHtml = templete;
         }
-    )
-    return mailHtml;
+        )
+        return mailHtml;
 }
 module.exports={
     transpoter:transpoter,
