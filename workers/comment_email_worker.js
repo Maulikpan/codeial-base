@@ -8,3 +8,5 @@ queue.process('emails',function(job,done){
 })
 
 //email name queue has enque operation perform when some comment has generated
+
+//workers automatically perform theire processing operation when enque operation or any comment is entered in queue
