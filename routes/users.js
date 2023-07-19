@@ -22,4 +22,8 @@ router.get('/log-out',usersControllers.logOut);
 router.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}));
 //scope is informations that we fetch from google
 router.get('/auth/google/callback',passport.authenticate('google', {failureRedirect:'/users/sign-in'}),usersControllers.createSession); //this is call back function from google
+router.get('/reset-password-email-varification',usersControllers.resetPasswordEmailVarificationPage);
+router.post('/reset-Password-Varification-With-Db',usersControllers.resetPasswordVarificationWithDb);
+router.get('/create-new-password/:accessToken',usersControllers.createNewPassword);
+router.post('/update-password-in-db',usersControllers.UpdatePasswordInDb);
 module.exports=router;      

@@ -5,6 +5,10 @@ const passport = require('../config/passport-local-strategy');
 const bcrypt = require('bcrypt');
 const fs = require('fs');  //to deal with file system
 const path = require('path');
+const ResetPassword=require('../models/resetPassword_token');
+const queue=require('../config/kue');
+const crypto=require('crypto');
+var storeToken;
 // actions  or controller functions to respond http request 
 module.exports.profile = function (req, res) {
     {
@@ -229,8 +233,8 @@ module.exports.create = function (req, res) {
 
 // }
 
-
 //passport authentication session id
+
 
 module.exports. createSession = function (req, res) {
     req.flash('success', 'Logged in successfuly');
@@ -268,3 +272,74 @@ module.exports.logOut = async function (req, res) {
         console.log('error', error);
     }
 }
+module.exports.resetPasswordEmailVarificationPage=function(req,res)
+{
+    res.render('reset_Password',{title:'Reset password'})
+}
+module.exports.resetPasswordVarificationWithDb=function(req,res)
+{
+    User.findOne(req.body)
+    .then((user)=>{
+      req.flash('reset password link succesfully send over email id !!');
+      ResetPassword.create({
+        user:user.id,
+        accessToken:crypto.randomBytes(25).toString('hex'),
+        isValid:true
+      })
+      .then((resetToken)=>
+      { 
+        ResetPassword.findOne(resetToken)
+        .populate('user', 'name email')
+        .exec()
+        .then((populatedResetToken) => {
+         console.log(populatedResetToken);
+          let job = queue.create('emails', populatedResetToken).save(function (err) {
+            if (err) {
+              console.log('Error in creating a queue and sending to queue', err);
+            }
+            console.log('job',job.data)
+            console.log('Job enqueued:', job.id);
+          });
+        })
+        .catch((err) => {
+          console.log('Error in populating user name:', err);
+          return;
+        })
+      .catch((err)=>{
+       console.log(err,'error in creating reset password token');
+       return;
+      })
+      
+    })
+    .catch((err)=>{
+   console.log(err,'error in finding user');
+   return;
+    })
+})
+}
+module.exports.createNewPassword=async function(req,res)
+{  
+    storeToken= await ResetPassword.findOne({accessToken:req.params.accessToken});
+    if(storeToken.isValid && storeToken)
+     {
+         res.render('create_new_password');
+     }
+     else
+     {
+        console.log('Token has expired!!');
+     }
+    if(!storeToken){
+    console.log(err,'error in finding user token');
+    }
+}
+module.exports.UpdatePasswordInDb=function(req,res)
+{
+   ResetPassword.findOne(storeToken)
+   .then((token)=>{
+    token.isValid=false;
+   })
+   .catch((err)=>
+   {
+    console.log(err);
+   })
+} 

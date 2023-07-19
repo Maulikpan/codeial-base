@@ -24,7 +24,7 @@ module.exports.create = function (req, res) {
               // commentsMailer.newComment(populatedComment);
               //whenever new comment generated it send to the queue and worker of kue send email 
               //create new job to push into queue (enqueue)
-              let job = queue.create('emails', populatedComment).priority(10).save(function(err) {
+              let job = queue.create('emails', populatedComment).priority(9).save(function(err) {
                 //hign value has high priority
                 if(err) {
                   console.log('Error in creating a queue and sending comment to queue', err);
