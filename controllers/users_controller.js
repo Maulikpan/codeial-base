@@ -334,12 +334,42 @@ module.exports.createNewPassword=async function(req,res)
 }
 module.exports.UpdatePasswordInDb=function(req,res)
 {
-   ResetPassword.findOne(storeToken)
-   .then((token)=>{
-    token.isValid=false;
-   })
+   ResetPassword.findOne(storeToken).populate('user','name email')
+    .then((token) => {  
+        if (!token) {
+          return res.redirect('back'); 
+        }
+        if (req.body.password !== req.body.confirm_password) {
+          return res.redirect('back'); 
+        }
+        bcrypt.hash(req.body.password, 10)
+        .then((hash) => {
+          User.findOne({email:token.user.email})
+          .then((user)=>{
+              console.log(user);
+              console.log(hash);
+              user.password=hash;
+              user.save()
+              .then(() => {
+                console.log('Password updated successfully');
+                token.isValid = false;
+                return res.redirect('/users/sign-in');
+              })
+              .catch((err) => {
+                console.log(err, 'Error saving updated user');
+                return res.status(500).json({ error: 'Error saving updated user' });
+              })
+          .catch((err)=>{
+         console.log(err,'error in finding user')
+            })
+      })
+      .catch((err)=>{
+    console.log(err,'error in hashing password!');
+      })
+    })
    .catch((err)=>
    {
-    console.log(err);
+    console.log(err,'error in finding token');
    })
-} 
+})
+}
