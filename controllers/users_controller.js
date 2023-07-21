@@ -293,7 +293,7 @@ module.exports.resetPasswordVarificationWithDb=function(req,res)
         .exec()
         .then((populatedResetToken) => {
          console.log(populatedResetToken);
-          let job = queue.create('emails', populatedResetToken).save(function (err) {
+          let job = queue.create('resetPassword', populatedResetToken).save(function (err) {
             if (err) {
               console.log('Error in creating a queue and sending to queue', err);
             }
