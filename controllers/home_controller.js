@@ -14,8 +14,8 @@ module.exports.home=function(req,res){
 //populate the user of each post
    
    Post.find({}).populate('user').populate({path:'comments',populate:{  
-    path:'user'
-  }}).exec()
+    path:'user'},populate:{path:'likes'}}).populate('likes')
+  }.exec()
   // Post.find({}).populate('user').populate('comments') for populate multiple fields  
    .then((posts) => { 
     User.find({})
@@ -32,8 +32,6 @@ module.exports.home=function(req,res){
    //also we can write like this
   // let post=Post.find({}).populate('user').populate({path:'comments',populate:{ path:'user'}}).exec()
   // post.then(()=>{})
-}
-
 //we can  write like  this as asynchronize using async await
 module.exports.home1=async function(req,res)
 {

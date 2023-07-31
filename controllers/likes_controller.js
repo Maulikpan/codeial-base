@@ -22,7 +22,7 @@ module.exports.toggleLike = async function (req, res) {
     if (existingLike) {
       likeable.likes.pull(existingLike);
       likeable.save();
-      existingLike.remove();
+      existingLike.remove();  //remoeve like from DB 
       deleted = true;
     }
     else {
@@ -31,7 +31,7 @@ module.exports.toggleLike = async function (req, res) {
         likeable: req.query.id,
         onModel: req.query.type
       });
-      likeable.likes.push(like._id);
+      likeable.likes.push(newLike._id);
       likeable.save();
     }
     return res.json(200, {
