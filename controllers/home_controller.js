@@ -3,7 +3,7 @@ const User=require('../models/user');
 const passport=require('../config/passport-local-strategy');
 module.exports.home=function(req,res){
    console.log(req.cookies); 
-// res.cookie('user_id',222);
+// res.cookie('user_id',222); 
 //    Post.find({user:req.user._id})
 //    .then((posts)=>{
 //        return res.render('../views/home.ejs',{title:"Codeial | Home",a:req.isAuthenticated()? true:false,posts:posts});
