@@ -1,8 +1,9 @@
 const Post=require('../models/post');
 const User=require('../models/user');
+const Like=require('../models/like');
 const passport=require('../config/passport-local-strategy');
 module.exports.home=function(req,res){
-   console.log(req.cookies); 
+  //  console.log(req.cookies); 
 // res.cookie('user_id',222); 
 //    Post.find({user:req.user._id})
 //    .then((posts)=>{
@@ -12,23 +13,33 @@ module.exports.home=function(req,res){
 //     console.log(error);
 //    })
 //populate the user of each post
-   
-   Post.find({}).populate('user').populate({path:'comments',populate:{  
-    path:'user'},populate:{path:'likes'}}).populate('likes')
-  }.exec()
-  // Post.find({}).populate('user').populate('comments') for populate multiple fields  
-   .then((posts) => { 
-    User.find({})
-    .then((users)=>{
-      return res.render('../views/home.ejs', { title: "Codeial | Home", a: req.isAuthenticated() ? true : false, posts: posts,all_users:users });
+Post.find({})
+.populate('user').populate({
+  path: 'comments',
+  populate: [
+    { path: 'user' }, // Nested populate for 'user' field in 'comments'
+    { path: 'likes' }, // Nested populate for 'likes' field in 'comments'
+  ],
+}).populate('likes')
+.then((posts) => {
+  User.find({})
+    .then((users) => {
+      return res.render('../views/home.ejs', {
+        title: "Codeial | Home",
+        a: req.isAuthenticated() ? true : false,
+        posts: posts,
+        all_users: users,
+      });
     })
-    .catch(()=>{
+    .catch((err) => {
+      console.error('Error fetching users:', err);
+    });
+})
+.catch((err) => {
+  console.error('Error fetching posts:', err);
+});
+}
 
-    })
-   })
-   .catch((err) => {
-     console.error(err);
-   });
    //also we can write like this
   // let post=Post.find({}).populate('user').populate({path:'comments',populate:{ path:'user'}}).exec()
   // post.then(()=>{})

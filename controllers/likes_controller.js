@@ -19,10 +19,12 @@ module.exports.toggleLike = async function (req, res) {
       onModel: req.query.type
     })
     //if like already exists than delete it  else make it
+    console.log(existingLike)
     if (existingLike) {
+      // Use 'likeable.likes' instead of 'likeable.Likes'
       likeable.likes.pull(existingLike);
       likeable.save();
-      existingLike.remove();  //remoeve like from DB 
+      await existingLike.deleteOne({_id:existingLike._id});  // remove like from DB 
       deleted = true;
     }
     else {
@@ -31,15 +33,11 @@ module.exports.toggleLike = async function (req, res) {
         likeable: req.query.id,
         onModel: req.query.type
       });
+      // Use 'likeable.likes' instead of 'likeable.Likes'
       likeable.likes.push(newLike._id);
       likeable.save();
     }
-    return res.json(200, {
-      message: "Request successful!",
-      data: {
-        deleted: deleted
-      }
-    })
+    return res.redirect('back')
   }
   catch (err) {
     console.log(err);

@@ -8,11 +8,11 @@ const likeSchema = new mongoose.Schema({
     likeable: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        refPath: 'onModel'  
+        refPath: 'onModel'
     },
     //this feild is used for defining the type of the liked object since this is a dynamic reference
     onModel: {
-        type: String,   
+        type: String,
         require: true,
         enum: ['Post', 'Comment']
     }

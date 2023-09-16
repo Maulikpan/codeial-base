@@ -1,5 +1,5 @@
-const Post=require('../models/post');
-const Comment=require('../models/comment');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 const Like = require('../models/like');
 const { hashSync } = require('bcrypt');
 // module.exports.create=function(req,res)
@@ -18,35 +18,32 @@ const { hashSync } = require('bcrypt');
 //           // Handle error
 //           console.error('Error creating post:', error);
 //         });
-     
+
 // }
-module.exports.create=async function(req,res)
-{
-  try
-  {
-    let post=await Post.create({
+module.exports.create = async function (req, res) {
+  try {
+    let post = await Post.create({
       content: req.body.content,
       user: res.locals.user._id    //or req.user._id or .id
     })
-    if(req.xhr)  //check that request is XMLHttpRequest or not? 
+    if (req.xhr)  //check that request is XMLHttpRequest or not? 
     {
-      return res.status(200).json({ 
-      data:{
-        post:post
-      },
-      message:"Post created!"
-    })
+      return res.status(200).json({
+        data: {
+          post: post
+        },
+        message: "Post created!"
+      })
     }
 
-       // req.flash('success','Post has been published successfuly')
-        // return res.redirect('back')
+    // req.flash('success','Post has been published successfuly')
+    // return res.redirect('back')
   }
-  catch(err)
-  {
-    req.flash('error',err);    
+  catch (err) {
+    req.flash('error', err);
     return res.redirect('back');
   }
-    
+
 }
 // module.exports.destroy=function(req,res)
 // {
@@ -59,7 +56,7 @@ module.exports.create=async function(req,res)
 //       post.deleteOne();
 //       Comment.deleteMany({post:req.params.id})
 //       .then((comments)=>{ 
-        
+
 //     console.log(comments);
 //     req.flash('success','Post and associated comment has been deleted  successfuly')
 //     // return res.redirect('back')  not needed in XMLHttprequest //because here no any reload of site
@@ -76,37 +73,35 @@ module.exports.create=async function(req,res)
 //     return res.redirect('back');
 //    })
 // }
-module.exports.destroy = async function(req, res){
-  try{
-      let post = await Post.findById(req.params.id);
-
-      if (post.user == req.user.id){
-          post.remove();
-          //delete the associated likes for the post and all it's comments likes too
-          await Like.deleteMany({likeable:post,
-                                 onModel:'Post'});        
-          await Comment.deleteMany({post: req.params.id});
-          await Like.deleteMany({_id:{$in :post.comments}});
-          if (req.xhr){
-              return res.status(200).json({
-                  data: {
-                      post_id: req.params.id
-                  },
-                  message: "Post deleted"
-              });
-          }
-
-          req.flash('success', 'Post and associated comments deleted!');
-     
-          return res.redirect('back');
-      }else{
-          req.flash('error', 'You cannot delete this post!');
-          return res.redirect('back');
+module.exports.destroy = async function (req, res) {
+  try {
+    let post = await Post.findById(req.params.id);
+    if (post.user == req.user.id) {
+      //delete the associated likes for the post and all it's comments likes too
+      await Like.deleteMany({ likeable: post._id, onModel: 'Post' });
+      await Like.deleteMany({ likeable: { $in: post.comments }, onModel: 'Comment' });
+      await Comment.deleteMany({ post: req.params.id });
+      post.deleteOne(); 
+      if (req.xhr) {
+        return res.status(200).json({ 
+          data: {
+            post_id: req.params.id
+          },
+          message: "Post deleted"
+        });
       }
 
-  }catch(err){
-      req.flash('error', err);
+      req.flash('success', 'Post and associated comments deleted!');
+
       return res.redirect('back');
+    } else {
+      req.flash('error', 'You cannot delete this post!');
+      return res.redirect('back');
+    }
+
+  } catch (err) {
+    req.flash('error', err);
+    return res.redirect('back');
   }
-  
+
 }

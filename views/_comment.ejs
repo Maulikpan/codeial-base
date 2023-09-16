@@ -1,14 +1,23 @@
 <div>
     <p style="color: red;">
-        <% if (locals.user.id == comment.user.id) { %>
+        <% if (locals.user && locals.user.id == comment.user.id) { %>
             <small>
-                <%/*%><!-- it is the same as comment._id --><%*/%>
+                <% /* Comment explaining the code */ %>
                 <a href="/comments/destroy/<%= comment.id %>"><button>Delete comment</button></a>   
             </small>
         <% } %>
-        comment: <%= comment.content %>
+        Comment: <%= comment.content %>
+        <small>
+            <% if (locals.user) { %>
+                <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%= comment._id %>&type=Comment">
+                    <%= comment.likes.length %> Likes
+                </a>
+            <% } else { %>
+                <%= comment.likes.length %> Likes
+            <% } %>
+        </small>
     </p>        
     <br>
-    <small style="color: red;">comment_name: <%= comment.user.name %></small>              
-    <small style="color: red;">comment_email: <%= comment.user.email %></small> 
+    <small style="color: red;">Comment Name: <%= comment.user.name %></small>              
+    <small style="color: red;">Comment Email: <%= comment.user.email %></small> 
 </div>

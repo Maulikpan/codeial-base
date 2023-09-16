@@ -1,26 +1,26 @@
 <link rel="stylesheet" href="/css/friends.css">    
-<h1>Codeial / <%=title%></h1>     <!--this is called variable part -->  
+<h1>Codeial / <%= title %></h1>
 <section id="feed-posts">
-    <%if(locals.a){%>
+    <% if (locals.a) { %>
     <h4>Posts</h4>
     <form action="/posts/create" id="new-post-form" method="POST">
-        <textarea name="content" id="" cols="50" rows="4" placeholder="Type here..." required></textarea>
-        <input type="submit" name="" id="" value="Post">
+        <textarea name="content" cols="50" rows="4" placeholder="Type here..." required></textarea>
+        <input type="submit" name="" value="Post">
     </form>
     <div id="posts-list-container">
-            <% for (post of posts) { %>
-                <%- include('_post') -%> 
-            <% } %>        
+        <% for (post of posts) { %>
+            <%- include('_post') -%>
+        <% } %>        
     </div>
-    <%}%>
+    <% } %>
 </section>
 
 <section id="user-friends">
     <h4>Friends</h4>
-    <% for(user of all_users){ %>
+    <% for (user of all_users) { %>
         <p>
-            <a href="/users/profile/<%=user.id%>"><%=user.name%></a>
+            <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
         </p>
-        <%}%>
+    <% } %>
 </section>
 <script src="/js/home_posts.js"></script>
