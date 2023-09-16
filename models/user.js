@@ -19,7 +19,12 @@ const userSchema=new mongoose.Schema({
    },
    avatar:{ 
     type:String
-   }
+   },
+   friendships:
+     [{
+         type:mongoose.Schema.Types.ObjectId,
+         ref:'Friendship'
+     }]
 },{
     timestamps:true   //created at....... updated at
 })
@@ -34,7 +39,7 @@ let storage = multer.diskStorage({
   })
   //static methods //publically accessed
 const uploadedAvatar=multer({storage:storage}).single('avatar');  //avatar is form feild name
-userSchema.statics.uploadedAvatar= uploadedAvatar//it is called using model name directly
+userSchema.statics.uploadedAvatar= uploadedAvatar//it is called using it with  model name directly
 userSchema.statics.avatarPath=AVATAR_PATH;
 const User= mongoose.model('User',userSchema); 
 module.exports=User;  
