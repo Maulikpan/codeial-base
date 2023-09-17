@@ -1,0 +1,70 @@
+/* Styling for the chat box container */
+#user-chat-box {
+    position:sticky;
+    top:0;
+    z-index: 1;
+    bottom: -60px;
+    margin-left: 93%;
+    border: 1px dashed grey;
+    height: 300px;
+    width: 250px;
+    background: white;
+    padding: 5px;
+    box-shadow: 1px 1px 1px 1px lightgrey;
+}
+/* Styling for the chat messages list */
+#chat-messages-list {
+    list-style: none;
+    padding: 10px;
+    height: 70%;
+    background-color: white;
+    overflow: auto;
+}
+
+/* Styling for other messages (align to the left) */
+.other-message {
+    text-align: left;
+    padding: 5px;
+}
+
+.other-message span {
+    display: inline-block;
+    padding: 15px;
+    background-color: #ffa0a0;
+}
+
+/* Styling for self messages (align to the right) */
+.self-message {
+    text-align: right;
+    padding: 5px;
+}
+
+.self-message span {
+    display: inline-block;
+    padding: 15px;
+    background-color: #a0dcff;
+}
+
+/* Styling for chat message input container */
+#chat-message-input-container {
+    height: 24%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Styling for chat message input */
+#chat-message-input {
+    height: 50%;
+    width: 70%;
+}
+
+/* Styling for send button */
+#send-message {
+    height: 50%;
+    width: 30%;
+    font-size: 25px;
+    color: white;
+    border: none;
+    background: #58d258;
+}
