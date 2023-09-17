@@ -6,11 +6,11 @@ let transpoter = nodeMailer.createTransport
 ({ //we use smtp config to send mail to remote user via smtp
     service:'gmail',
     host:'smtp.gmail.com',
-    port:587, //TLS
+    port:465, //TLS
     secure:true,
     auth: {
         user:'easywayforweb@gmail.com',
-        pass:'ofypwwiqyrvtwjhh'
+        pass:'vhykrhbvirgpxrjf'
     }
 });
 

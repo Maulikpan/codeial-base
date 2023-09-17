@@ -293,13 +293,13 @@ module.exports.resetPasswordVarificationWithDb=function(req,res)
         .exec()
         .then((populatedResetToken) => {
          console.log(populatedResetToken);
-          let job = queue.create('resetPassword', populatedResetToken).save(function (err) {
-            if (err) {
-              console.log('Error in creating a queue and sending to queue', err);
-            }
-            console.log('job',job.data)
-            console.log('Job enqueued:', job.id);
-          });
+        //   let job = queue.create('resetPassword', populatedResetToken).save(function (err) {
+        //     if (err) {
+        //       console.log('Error in creating a queue and sending to queue', err);
+        //     }
+        //     console.log('job',job.data)
+        //     console.log('Job enqueued:', job.id);
+        //   });
         })
         .catch((err) => {
           console.log('Error in populating user name:', err);
