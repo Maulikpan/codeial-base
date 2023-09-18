@@ -1,6 +1,7 @@
 const User=require('../../../models/user');
 const jwt=require('jsonwebtoken');
 const bcrypt=require('bcrypt');
+const env = require('../../../config/environment')
 module.exports.createSession =async function (req, res) 
 {
     try
@@ -15,7 +16,7 @@ module.exports.createSession =async function (req, res)
     return res.json(200,{
         message:"Sign in succesfully ,here is your token please keep it safe",
         data:{
-            token:jwt.sign(user.toJSON(),'codeial',{expiresIn:'100000'})
+            token:jwt.sign(user.toJSON(),env.jwt_secret,{expiresIn:'100000'})
             //this create a json web token using this three parameter
             //header + payload +signature
             // header section contain the info of user that is extracted by jwt 

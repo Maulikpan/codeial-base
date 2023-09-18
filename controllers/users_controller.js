@@ -129,7 +129,6 @@ module.exports.signIn = function (req, res) {
 //         });
 // }
 module.exports.create = function (req, res) {
-    console.log(req.body);
     if (req.body.password != req.body.confirm_password) {
         return res.redirect('back');
     }
@@ -160,7 +159,6 @@ module.exports.create = function (req, res) {
                         // Create the user with the hashed password
                         User.create(req.body)
                             .then((user) => {
-                                console.log('New user added successfully!', user);
                                 return res.redirect('/users/sign-in');
                             })
                             .catch((err) => {
@@ -256,7 +254,6 @@ module.exports.destroySession = function (req, res) {
 }
 module.exports.logOut = async function (req, res) {
     try {
-        console.log(res.locals.user);
         // await Post.findByIdAndDelete(res.locals.user.id);
         let comment = await Comment.find({ user: res.locals.user.id });
         for (let com of comment) {

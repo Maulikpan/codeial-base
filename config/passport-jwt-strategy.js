@@ -4,9 +4,10 @@ const passport = require('passport');
 const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const User = require('../models/user');
+const env = require('../config/environment')
 let opts = {
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'codeial'   //to encrpt and decrypt jwt token 
+    secretOrKey:env.jwt_secret   //to encrpt and decrypt jwt token 
 }
 
 //users jwt is generated and we match that to authenticate the user

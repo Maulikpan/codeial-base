@@ -1,18 +1,12 @@
 const nodeMailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
+const env = require('../config/environment')
 const { realpath } = require('fs');
 let transpoter = nodeMailer.createTransport
-({ //we use smtp config to send mail to remote user via smtp
-    service:'gmail',
-    host:'smtp.gmail.com',
-    port:465, //TLS
-    secure:true,
-    auth: {
-        user:'easywayforweb@gmail.com',
-        pass:'vhykrhbvirgpxrjf'
-    }
-});
+( //we use smtp config to send mail to remote user via smtp
+ env.smtp
+);
 
 let renderTemplete = function (data, relativePath) {
     let mailHtml;
