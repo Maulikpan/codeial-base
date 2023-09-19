@@ -1,5 +1,6 @@
 const { urlencoded } = require('body-parser');
 const env = require('./config/environment')
+const logger = require('morgan')
 const express = require('express');
 const app = express();
 const port = 8000;
@@ -16,6 +17,7 @@ const passportGoogle=require('./config/passport-google-oauth-20-strategy');
 const MongoStore=require('connect-mongo');
 const flash=require('connect-flash');
 const customeMware=require('./config/middleware');
+const { getLogger } = require('nodemailer/lib/shared');
 //setup the chat server to be used with socket.io
 const chatServer= require('http').Server(app)
 const chatSockets=require('./config/chat_sockets').chatSockets(chatServer)
@@ -25,6 +27,7 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 //make the uploads path available for the browser 
 app.use('/uploads',express.static(__dirname+'/uploads'))  //static folder must be used in middleware
+app.use(logger(env.morgan.mode,env.morgan.options))
 app.use(express.static(env.asset_path));   
 app.use(expresslayouts);
 //extract style and script from sub pages into the layout
