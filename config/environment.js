@@ -1,12 +1,12 @@
 const fs = require('fs')
 const rfs = require('rotating-file-stream');
 const path = require('path');
-const logDirectory = path.join(__dirname,'../production_logs')
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
-const accessLogStream = rfs('access.log',{
-    interval:'1d',
-    path:'logDirectory'
-})
+// const logDirectory = path.join(__dirname,'../production_logs')
+// fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+// const accessLogStream = rfs('access.log',{
+//     interval:'1d',
+//     path:'logDirectory'
+// })
 
 const development = {
     name:'development',
@@ -25,10 +25,10 @@ const development = {
     google_client_secret:"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",
     google_call_back_url:"http://localhost:8000/users/auth/google/callback",
     jwt_secret:'codeial',
-    morgan:{
-        mode:'dev',
-        options:{stream:accessLogStream}
-    }
+    // morgan:{
+    //     mode:'dev',
+    //     options:{stream:accessLogStream}
+    // }
 }
 module.exports=development
 //in production you need to remove alll the console.log form project

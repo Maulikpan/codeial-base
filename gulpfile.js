@@ -5,8 +5,6 @@ const rev = require('gulp-rev');
 const uglify = require('gulp-uglify-es');
 const imagemin = require('gulp-imagemin');
 const del = require('del');
-
-
 // gulp.task('css', function(done){
 //     console.log('minifying css...');
 //     // gulp.src('./assets/sass/**/*.scss')
@@ -52,6 +50,7 @@ gulp.task('images', function (done) {
             merge: true
         }))
         .pipe(gulp.dest('./public/assets'));
+        
     done();
 });
 

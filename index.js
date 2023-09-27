@@ -3,6 +3,7 @@ const env = require('./config/environment')
 const logger = require('morgan')
 const express = require('express');
 const app = express();
+require('./config/view-helpers')(app)
 const port = 8000;
 const expresslayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
@@ -27,7 +28,7 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 //make the uploads path available for the browser 
 app.use('/uploads',express.static(__dirname+'/uploads'))  //static folder must be used in middleware
-app.use(logger(env.morgan.mode,env.morgan.options))
+// app.use(logger(env.morgan.mode,env.morgan.options))
 app.use(express.static(env.asset_path));   
 app.use(expresslayouts);
 //extract style and script from sub pages into the layout
