@@ -1,4 +1,4 @@
 module.exports.name=function(req,res)
 {
-    return res.end("Hello my name is maulik");
+   return res.send('Maulik panchal')
 }
