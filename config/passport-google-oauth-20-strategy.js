@@ -16,7 +16,7 @@ function(accessToken, refreshToken, profile,done) {
     .then((user)=>{
         if(user)
         {
-            //if found, set this user as req.user
+            //if found, set this user as  req.user
            return done(null,user);
         }
         else

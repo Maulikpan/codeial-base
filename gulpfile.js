@@ -24,7 +24,7 @@ const del = require('del');
 // });
 
 
-gulp.task('js', function (done) {
+gulp.task('js', function (done) {   
     console.log('minifying js...');
     gulp.src('./assets/**/*.js')
         .pipe(uglify())

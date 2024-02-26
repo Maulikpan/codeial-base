@@ -1,7 +1,5 @@
-
 module.exports.chatSockets = function (socketServer) {
     let io = require('socket.io')(socketServer);
-
     io.sockets.on('connection', function (socket) { //receive a connection when fire from frontend
         //socket is object it has many property
         console.log('new connection received', socket.id);

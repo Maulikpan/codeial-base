@@ -8,7 +8,7 @@ const path = require('path');
 const ResetPassword=require('../models/resetPassword_token');
 const queue=require('../config/kue');
 const crypto=require('crypto');
-var storeToken;
+var storeToken; 
 // actions  or controller functions to respond http request 
 module.exports.profile = function (req, res) {
     {
@@ -29,7 +29,7 @@ module.exports.profile = function (req, res) {
 //             })
 //     }
 // }
-module.exports.update = async function (req, res) {
+module.exports. update = async function (req, res) {
     if (req.user.id == req.params.id)   //for security purpose
     {
         try {
@@ -233,8 +233,7 @@ module.exports.create = function (req, res) {
 
 //passport authentication session id
 
-
-module.exports. createSession = function (req, res) {
+module.exports.createSession = function (req, res) {
     req.flash('success', 'Logged in successfuly');
     return res.redirect('/');
 }

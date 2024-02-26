@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const env = require('../config/environment')
 //connect  odm( mongoose )to database
-mongoose.connect(`mongodb://127.0.0.1/${env.db}`);
+mongoose.connect(`mongodb://localhost:27017/${env.db}`);
 //acquire a connection to access (to check if it succesfull) 
 const db=mongoose.connection; //db is definition for conection of mongoose to db;
 //error if not connecting successfull
